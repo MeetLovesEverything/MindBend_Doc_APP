@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mind_bend_doc/api/gsheets_api.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
@@ -355,6 +356,15 @@ class PreviewScreen extends StatelessWidget {
         initialPageFormat: PdfPageFormat.a4,
         // Explicitly set page format to A4
         useActions: true,
+        onPrinted: (context)async{
+          final row = [
+            mouData.date.toString(),
+            "MOU",
+            mouData.orgName,
+            "+10000"
+          ];
+          await GsheetsApi.insert(row);
+        },
       ),
     );
   }
